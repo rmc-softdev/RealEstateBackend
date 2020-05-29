@@ -1,0 +1,9 @@
+{
+  "env": {
+    "DB_USER": "rmcdev",
+    "DB_PASSWORD": "eueumesmo",
+    "DB_NAME": "mern",
+    "GOOGLE_API_KEY": "AIzaSyAud-EQHWYBuy-53l0P01mu-fVLE-w6l9g",
+    "JWT_KEY": "secretKey"
+  }
+}
