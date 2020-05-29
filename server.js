@@ -56,11 +56,12 @@ server.use((error, req, res, next) => {
   res.json({ message: error.message || "An unknown error occurred!" });
 });
 
+
 mongoose
   .connect(
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-lako1.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
   )
-  .then(server.listen(5000))
+  .then(server.listen(process.env.PORT || 5000))
   .catch((err) => {
     console.log(err);
   });
