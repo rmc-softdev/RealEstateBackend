@@ -29,7 +29,7 @@ server.use((req, res, next) => {
 
 
 server.use("/api/places", placesRoutes);
-server.use("api/users", usersRoutes);
+server.use("/api/users", usersRoutes);
 
 //we only reach this middleware if no other route has been picked up
 server.use((req, res, next) => {
