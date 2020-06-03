@@ -14,7 +14,7 @@ const signup = async (req, res, next) => {
       new HttpError('Invalid inputs passed, please check your data.', 422)
     );
   }
-  const { name, email, password } = req.body;
+  const { name, email, password, mobile, office, fax, location, contactemail } = req.body;
 
   let existingUser;
   try {
@@ -48,7 +48,12 @@ const signup = async (req, res, next) => {
     email,
     image: req.file.path,
     password: hashedPassword,
-    places: []
+    places: [],
+    mobile,
+    fax,
+    office,
+    location,
+    contactemail
   });
 
   try {
@@ -74,7 +79,7 @@ const signup = async (req, res, next) => {
     return next(newError);
   }
 
-  res.status(201).json({ userId: createdUser.id, email: createdUser.email, token: token });
+  res.status(201).json({ userId: createdUser.id, email: createdUser.email, token: token, userImage: createdUser.image });
 };
 
 const getUsers = async (req, res, next) => {
@@ -90,6 +95,33 @@ const getUsers = async (req, res, next) => {
   }
   res.json({ users: users.map(user => user.toObject({ getters: true })) });
 };
+
+const getUserById = async (req, res, next) => {
+  const userId = req.params.uid;
+
+  let user;
+
+  try {
+    user = await User.findById(userId);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find the requested user.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError(
+      "Could not find the provided user",
+      404
+    );
+    return next(error);
+  }
+
+  res.json({ user: user.toObject({ getters: true }) })
+}
+
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -149,10 +181,12 @@ const login = async (req, res, next) => {
   res.json({
     userId: existingUser.id,
     email: existingUser.email,
-    token: token
+    token: token,
+    userImage: existingUser.image
   });
 };
 
 exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
+exports.getUserById = getUserById

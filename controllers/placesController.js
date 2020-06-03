@@ -7,6 +7,18 @@ const getCoordsForAddress = require("../utils/location");
 const Place = require("../models/place");
 const User = require("../models/user");
 
+
+const getAllPlaces = async (req, res, next) => {
+  let places
+  try {
+    places = await Place.find({})
+  } catch (err) {
+    const error = new HttpError('Retrieving homes from our database has failed. Please try again later.', 500)
+    return next(error)
+  }
+  res.json({ homes: places.map(place => place.toObject({ getters: true })) });
+}
+
 const getPlaceById = async (req, res, next) => {
   const placeId = req.params.pid;
 
@@ -67,7 +79,7 @@ const createPlace = async (req, res, next) => {
     );
   }
 
-  const { title, description, address } = req.body;
+  const { title, description, address, area, bathrooms, bedrooms, garages, type, status, price } = req.body;
 
   let coordinates;
   try {
@@ -76,13 +88,22 @@ const createPlace = async (req, res, next) => {
     return next(error);
   }
 
+
+
   const createdPlace = new Place({
     title,
     description,
     address,
     location: coordinates,
     image: req.file.path,
-    creator: req.userData.userId
+    creator: req.userData.userId,
+    area,
+    bedrooms,
+    bathrooms,
+    garages,
+    type,
+    status,
+    price
   });
 
   let user;
@@ -231,3 +252,4 @@ exports.getPlacesByUserId = getPlacesByUserId;
 exports.createPlace = createPlace;
 exports.updatePlace = updatePlace;
 exports.deletePlace = deletePlace;
+exports.getAllPlaces = getAllPlaces

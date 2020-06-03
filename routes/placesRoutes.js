@@ -10,6 +10,8 @@ const checkAuth = require('../middleware/checkAuth')
 
 const router = express.Router();
 
+router.get("/homes", placeControllers.getAllPlaces)
+
 router.get("/:pid", placeControllers.getPlaceById);
 
 router.get("/user/:uid", placeControllers.getPlacesByUserId);

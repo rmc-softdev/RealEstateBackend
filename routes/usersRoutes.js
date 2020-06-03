@@ -8,6 +8,8 @@ const fileUpload = require('../middleware/fileUpload')
 
 const router = express.Router();
 
+
+router.get("/agent/:uid", usersController.getUserById)
 router.get("/", usersController.getUsers);
 
 router.post(
