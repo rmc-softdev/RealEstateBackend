@@ -103,7 +103,7 @@ const createPlace = async (req, res, next) => {
     garages,
     type,
     status,
-    price
+    price,
   });
 
   let user;
@@ -127,6 +127,7 @@ const createPlace = async (req, res, next) => {
     await createdPlace.save({ session: sess });
     //notice that user has the property places as a array, but push is a method used by mongoose which estabilishes the connection between both of them;
     user.places.push(createdPlace);
+    user.locations.push(createdPlace.location)
     await user.save({ session: sess });
 
     await sess.commitTransaction();
@@ -140,6 +141,15 @@ const createPlace = async (req, res, next) => {
     //the main two reasons the error could occur here, just to be clear, is only if the DB is down or something to that, or even if our validation failed
     return next(error);
   }
+
+
+
+
+
+
+
+
+
 
   res.status(201).json({ place: createdPlace });
 };

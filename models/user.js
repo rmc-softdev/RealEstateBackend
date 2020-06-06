@@ -14,7 +14,8 @@ const userSchema = new Schema({
   fax: { type: String },
   office: { type: String },
   location: { type: String },
-  contactemail: { type: String }
+  contactemail: { type: String },
+  locations: [{ type: String, ref: "Place" }],
 });
 
 userSchema.plugin(uniqueValidator);

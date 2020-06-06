@@ -18,7 +18,7 @@ const placeSchema = new Schema({
   garages: { type: String },
   bathrooms: { type: String },
   type: { type: String },
-  status: { type: String },
+  status: { type: Object },
 });
 
 module.exports = mongoose.model("Place", placeSchema);
