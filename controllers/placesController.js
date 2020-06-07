@@ -129,7 +129,6 @@ const createPlace = async (req, res, next) => {
     user.places.push(createdPlace);
     user.locations.push(createdPlace.location)
     await user.save({ session: sess });
-
     await sess.commitTransaction();
     // only at this point the saves are saved in our DB
   } catch (err) {
