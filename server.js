@@ -1,5 +1,5 @@
-const fs = require('fs')
-const path = require('path')
+const fs = require("fs");
+const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -13,20 +13,18 @@ const server = express();
 
 server.use(bodyParser.json());
 
-server.use('/uploads/images/', express.static(path.join('uploads', 'images')))
-
+server.use("/uploads/images/", express.static(path.join("uploads", "images")));
 
 server.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
 
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
-
-
-
-  next()
-})
-
+  next();
+});
 
 server.use("/api/places", placesRoutes);
 server.use("/api/users", usersRoutes);
@@ -44,8 +42,8 @@ server.use((error, req, res, next) => {
   //this property is added to the request by multer
   if (req.file) {
     fs.unlink(req.file.path, (err) => {
-      console.log(err)
-    })
+      console.log(err);
+    });
   }
 
   if (res.headerSent) {
@@ -56,14 +54,11 @@ server.use((error, req, res, next) => {
   res.json({ message: error.message || "An unknown error occurred!" });
 });
 
-
 mongoose
   .connect(
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-lako1.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
   )
   .then(server.listen(process.env.PORT || 5000))
   .catch((err) => {
-    console.log(err);
+    console.error(err);
   });
-
-
