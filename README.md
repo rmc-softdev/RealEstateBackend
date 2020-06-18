@@ -19,4 +19,4 @@ to make reusable components. This was done, even in the backend, by the aid of c
 
 
 ## Issues
-One of the things I wish I could've done better was the handling of the geolocations of the rentals in the DB. I was unable to create a specific collection inside our main cluster to hold our such positions (for now, I created a custom hook inside the front end to handle such requests), I still think it would've made my life much easier and also it would be more scalable to do so, due to perfomance issues in larger apps.
+One of the things I wish I could've done better was the handling of the geolocations of the rentals in the DB. I was unable to create a specific collection (due to a mongoose problem with collections of arrays) inside our main cluster to hold our such positions (for now, I created a custom hook inside the front end to handle such requests), I still think it would've made my life much easier and also it would be more scalable to do so, due to perfomance issues in larger apps.
