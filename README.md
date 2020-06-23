@@ -12,6 +12,8 @@ Simply type consecutively:
 
 >> In both the FRONT END folder and the BACK END folder. You can find the BACK END folder here: https://github.com/rmc-softdev/RealEstateBackend
 
+>> THIS IS VERY IMPORTANT! Since I use different API's key in production mode and dev mode, you have to change the script inside package.json from 'node' to 'nodemon' in order to actually access the database.
+
 ## Technical comments
 
 One of the strong points of this project is, as I foresaid, the file structure and the scalability by chosing a clean design pattern and choosing, whenever possible,
